@@ -135,7 +135,6 @@ class DeleniTest {
         void doubleZero() {
             Deleni deleni = new Deleni();
             deleni.setA(0);
-            deleni.setB(0);
 
             assertThrows(
                     ArithmeticException.class,
@@ -157,7 +156,6 @@ class DeleniTest {
         void positiveAndZero() {
             Deleni deleni = new Deleni();
             deleni.setA(5);
-            deleni.setB(0);
 
             assertThrows(
                     ArithmeticException.class,
@@ -179,7 +177,6 @@ class DeleniTest {
         void negativeAndZero() {
             Deleni deleni = new Deleni();
             deleni.setA(-5);
-            deleni.setB(0);
 
             assertThrows(
                     ArithmeticException.class,
