@@ -42,12 +42,12 @@ public class Kalkulacka implements Runnable {
      */
     @Override
     public void run() {
-        nacistOperaci();
+        nacistOperaciOpakovane();
         if (zvolenaOperace.getPocetOperandu() >= 1) {
-            nacistPrvniCislo();
+            nacistPrvniCisloOpakovane();
         }
         if (zvolenaOperace.getPocetOperandu() >= 2) {
-            nacistDruheCisloCislo();
+            nacistDruheCisloCisloOpakovane();
         }
         vypsatVysledek();
     }
@@ -56,8 +56,7 @@ public class Kalkulacka implements Runnable {
      * Vypíše prompt a načte následný vstup od uživatele.
      *
      * @param format Formátovací řetězec pro {@link String#format(String, Object...)}.
-     * @param args Argumenty pro dosazení do formátovacího řetězce.
-     *
+     * @param args   Argumenty pro dosazení do formátovacího řetězce.
      * @return Vstup od uživatele.
      */
     private String nacistUdaj(String format, Object... args) {
@@ -68,7 +67,6 @@ public class Kalkulacka implements Runnable {
      * Vypíše prompt a načte následný vstup od uživatele.
      *
      * @param prompt Výzva uživateli, co má zadat.
-     *
      * @return Vstup od uživatele.
      */
     private String nacistUdaj(String prompt) {
@@ -87,12 +85,42 @@ public class Kalkulacka implements Runnable {
     }
 
     /**
+     * Načte od uživatele operaci, kterou chce provést. Pokud uživatel zadá neexistující operaci, vyzve ho k opětovnému zadání.
+     */
+    private void nacistOperaciOpakovane() {
+        for (int i = 0; i < 3; i++) {
+            try {
+                nacistOperaci();
+                return;
+            } catch (IllegalArgumentException e) {
+                System.err.println("Zadána neplatná operace.");
+            }
+        }
+        ukoncitAplikaci();
+    }
+
+    /**
      * Načte od uživatele první číslo (první operand).
      */
     private void nacistPrvniCislo() {
         String vstup = nacistUdaj("Zadejte první (celé) číslo a stiskněte <Enter>:");
         int cislo = Integer.parseInt(vstup);
         zvolenaOperace.setA(cislo);
+    }
+
+    /**
+     * Načte od uživatele první číslo (první operand). Pokud uživatel zadá chybný vstup, vyzve ho k opětovnému zadání.
+     */
+    private void nacistPrvniCisloOpakovane() {
+        for (int i = 0; i < 3; i++) {
+            try {
+                nacistPrvniCislo();
+                return;
+            } catch (IllegalArgumentException e) {
+                System.err.println("Zadáno neplatné číslo.");
+            }
+        }
+        ukoncitAplikaci();
     }
 
     /**
@@ -105,10 +133,30 @@ public class Kalkulacka implements Runnable {
     }
 
     /**
+     * Načte od uživatele druhé číslo (druhý operand). Pokud uživatel zadá chybný vstup, vyzve ho k opětovnému zadání.
+     */
+    private void nacistDruheCisloCisloOpakovane() {
+        for (int i = 0; i < 3; i++) {
+            try {
+                nacistDruheCisloCislo();
+                return;
+            } catch (IllegalArgumentException e) {
+                System.err.println("Zadáno neplatné číslo.");
+            }
+        }
+        ukoncitAplikaci();
+    }
+
+    /**
      * Provede výpočet a vypíše výsledek operace včetně celého výpočtu.
      */
     private void vypsatVysledek() {
         System.out.printf("Výpočet: %s", zvolenaOperace.vypocet()).println();
+    }
+
+    private void ukoncitAplikaci() {
+        System.err.println("Příliš mnoho neplatných pokusů o zadání vstupu, končím aplikaci.");
+        System.exit(1);
     }
 
     /**
