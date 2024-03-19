@@ -1,5 +1,8 @@
 package cz.czechitas.lekce10;
 
+import cz.czechitas.lekce10.operace.*;
+
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -7,80 +10,68 @@ import java.util.Scanner;
  */
 public class Kalkulacka implements Runnable {
 
-    private final KalkulackaSimpleEngine kalkulacka = new KalkulackaSimpleEngine();
     private final Scanner console = new Scanner(System.in);
+    private final Map<String, Operace> mapaOperaci;
+    private Operace zvolenaOperace;
 
     public static void main(String[] args) {
         new Kalkulacka().run();
     }
 
+    public Kalkulacka() {
+        mapaOperaci = Map.of(
+                "+", new Scitani(),
+                "-", new Odcitani(),
+                "*", new Nasobeni(),
+                "/", new Deleni(),
+                "odmocnit", new DruhaOdmocnina(),
+                "pi", new CisloPi(Math.PI),
+                "e", new CisloE(Math.E)
+        );
+    }
+
     @Override
     public void run() {
-        nacistPrvniCislo();
-        nacistDruheCisloCislo();
-        nacistOperaciAVypocitat();
+        nacistOperaci();
+        if (zvolenaOperace.getPocetOperandu() >= 1) {
+            nacistPrvniCislo();
+        }
+        if (zvolenaOperace.getPocetOperandu() >= 2) {
+            nacistDruheCisloCislo();
+        }
+        vypsatVysledek();
+    }
+
+    private String nacistUdaj(String format, Object... args) {
+        return nacistUdaj(String.format(format, args));
+    }
+
+    private String nacistUdaj(String prompt) {
+        System.out.println(prompt);
+        System.out.print("> ");
+        return console.nextLine();
+    }
+
+    private void nacistOperaci() {
+        String seznamOperaci = String.join(", ", mapaOperaci.keySet());
+        String vstup = nacistUdaj("Zadejte operaci (%s) a stiskněte <Enter>:", seznamOperaci);
+        zvolenaOperace = mapaOperaci.get(vstup);
     }
 
     private void nacistPrvniCislo() {
-        System.out.println("Zadejte první číslo a stiskněte <Enter>:");
-        String vstup = console.nextLine();
+        String vstup = nacistUdaj("Zadejte první (celé) číslo a stiskněte <Enter>:");
         int cislo = Integer.parseInt(vstup);
-        kalkulacka.setA(cislo);
+        zvolenaOperace.setA(cislo);
     }
 
     private void nacistDruheCisloCislo() {
-        System.out.println("Zadejte druhé číslo a stiskněte <Enter>:");
-        String vstup = console.nextLine();
+        String vstup = nacistUdaj("Zadejte druhé (celé) číslo a stiskněte <Enter>:");
         int cislo = Integer.parseInt(vstup);
-        kalkulacka.setB(cislo);
+        zvolenaOperace.setB(cislo);
     }
 
-    private void nacistOperaciAVypocitat() {
-        System.out.println("Zadejte operaci (+, -, *, /, odmocnit) a stiskněte <Enter>:");
-        String vstup = console.nextLine();
-        System.out.println("Výpočet:");
-        switch (vstup) {
-            case "+":
-                secistCisla();
-                break;
-            case "-":
-                odecistCisla();
-                break;
-            case "*":
-                vynasobitCisla();
-                break;
-            case "/":
-                vydelitCisla();
-                break;
-            case "odmocnit":
-                odmocnitCislo();
-                break;
-            default:
-        }
+    private void vypsatVysledek() {
+        System.out.printf("Výpočet: %s", zvolenaOperace.vypocet()).println();
     }
 
-    private void secistCisla() {
-        int vysledek = kalkulacka.secist();
-        System.out.printf("%d + %d = %d", kalkulacka.getA(), kalkulacka.getB(), vysledek).println();
-    }
-
-    private void odecistCisla() {
-        int vysledek = kalkulacka.odecist();
-        System.out.printf("%d - %d = %d", kalkulacka.getA(), kalkulacka.getB(), vysledek).println();
-    }
-
-    private void vynasobitCisla() {
-        int vysledek = kalkulacka.nasobit();
-        System.out.printf("%d ⋅ %d = %d", kalkulacka.getA(), kalkulacka.getB(), vysledek).println();
-    }
-
-    private void vydelitCisla() {
-        int vysledek = kalkulacka.delit();
-        System.out.printf("%d ÷ %d = %d", kalkulacka.getA(), kalkulacka.getB(), vysledek).println();
-    }
-
-    private void odmocnitCislo() {
-        int vysledek = kalkulacka.druhaOdmocnina();
-        System.out.printf("√%d = %d", kalkulacka.getA(), vysledek).println();
-    }
 }
