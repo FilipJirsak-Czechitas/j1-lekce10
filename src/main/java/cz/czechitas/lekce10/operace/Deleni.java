@@ -11,6 +11,7 @@ public class Deleni implements Operace {
 
     @Override
     public void setA(int a) {
+        OperaceHelper.validovatOperand(a);
         this.a = a;
     }
 
@@ -21,6 +22,10 @@ public class Deleni implements Operace {
 
     @Override
     public void setB(int b) {
+        OperaceHelper.validovatOperand(b);
+        if (b == 0) {
+            throw new IllegalArgumentException("Nelze dělit nulou.");
+        }
         this.b = b;
     }
 
@@ -36,6 +41,9 @@ public class Deleni implements Operace {
 
     @Override
     public String vypocet() {
+        if (b == 0) {
+            throw new ArithmeticException("Nelze dělit nulou.");
+        }
         int vysledek = a / b;
         return "%d ÷ %d = %d".formatted(a, b, vysledek);
     }

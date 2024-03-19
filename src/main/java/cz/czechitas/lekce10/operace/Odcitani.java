@@ -11,6 +11,7 @@ public class Odcitani implements Operace {
 
     @Override
     public void setA(int a) {
+        OperaceHelper.validovatOperand(a);
         this.a = a;
     }
 
@@ -21,6 +22,7 @@ public class Odcitani implements Operace {
 
     @Override
     public void setB(int b) {
+        OperaceHelper.validovatOperand(b);
         this.b = b;
     }
 
@@ -34,9 +36,11 @@ public class Odcitani implements Operace {
     public int getPocetOperandu() {
         return 2;
     }
+
     @Override
     public String vypocet() {
         int vysledek = a - b;
+        OperaceHelper.validovatVysledek(vysledek);
         return "%d - %d = %d".formatted(a, b, vysledek);
     }
 }

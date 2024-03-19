@@ -14,20 +14,22 @@ public class CisloPi implements Operace {
 
     @Override
     public void setA(int a) {
+        throw new UnsupportedOperationException("Konstanta nemá žádné operandy.");
     }
 
     @Override
     public int getA() {
-        return 0;
+        throw new UnsupportedOperationException("Konstanta nemá žádné operandy.");
     }
 
     @Override
     public void setB(int b) {
+        throw new UnsupportedOperationException("Konstanta nemá žádné operandy.");
     }
 
     @Override
     public int getB() {
-        return 0;
+        throw new UnsupportedOperationException("Konstanta nemá žádné operandy.");
     }
 
     @Override
