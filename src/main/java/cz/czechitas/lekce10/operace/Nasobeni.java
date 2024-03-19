@@ -1,6 +1,8 @@
 package cz.czechitas.lekce10.operace;
 
 /**
+ * Operace násobení dvou čísel.
+ *
  * @author Filip Jirsák
  */
 public class Nasobeni implements Operace {

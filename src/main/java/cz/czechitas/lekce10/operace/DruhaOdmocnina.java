@@ -1,6 +1,8 @@
 package cz.czechitas.lekce10.operace;
 
 /**
+ * Operace druhé odmocniny.
+ *
  * @author Filip Jirsák
  */
 public class DruhaOdmocnina implements Operace {

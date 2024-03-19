@@ -1,6 +1,8 @@
 package cz.czechitas.lekce10.operace;
 
 /**
+ * Operace odčítání dvou čísel.
+ *
  * @author Filip Jirsák
  */
 public class Odcitani implements Operace {

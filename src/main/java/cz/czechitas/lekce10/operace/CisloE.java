@@ -1,6 +1,8 @@
 package cz.czechitas.lekce10.operace;
 
 /**
+ * Operace vracející konstantu e – Eulerova konstanta.
+ *
  * @author Filip Jirsák
  */
 public class CisloE implements Operace {

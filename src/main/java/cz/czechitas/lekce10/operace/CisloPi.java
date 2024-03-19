@@ -1,6 +1,8 @@
 package cz.czechitas.lekce10.operace;
 
 /**
+ * Operace vracející číslo π.
+ *
  * @author Filip Jirsák
  */
 public class CisloPi implements Operace {

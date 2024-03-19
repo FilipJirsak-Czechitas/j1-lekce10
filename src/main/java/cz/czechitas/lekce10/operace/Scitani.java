@@ -1,6 +1,8 @@
 package cz.czechitas.lekce10.operace;
 
 /**
+ * Operace sčítání dvou čísel.
+ *
  * @author Filip Jirsák
  */
 public class Scitani implements Operace {

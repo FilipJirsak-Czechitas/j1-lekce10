@@ -1,6 +1,8 @@
 package cz.czechitas.lekce10.operace;
 
 /**
+ * Operace dělení dvou čísel.
+ *
  * @author Filip Jirsák
  */
 public class Deleni implements Operace {
