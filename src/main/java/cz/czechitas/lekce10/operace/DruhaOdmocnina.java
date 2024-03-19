@@ -10,6 +10,10 @@ public class DruhaOdmocnina implements Operace {
 
     @Override
     public void setA(int a) {
+        OperaceHelper.validovatOperand(a);
+        if (a < 0) {
+            throw new IllegalArgumentException("Druhá odmocnina není definována pro záporná čísla.");
+        }
         this.a = a;
     }
 
@@ -20,11 +24,12 @@ public class DruhaOdmocnina implements Operace {
 
     @Override
     public void setB(int b) {
+        throw new UnsupportedOperationException("Druhá odmocnina má jen jeden operand.");
     }
 
     @Override
     public int getB() {
-        return 0;
+        throw new UnsupportedOperationException("Druhá odmocnina má jen jeden operand.");
     }
 
     @Override
