@@ -1,7 +1,10 @@
 package cz.czechitas.lekce10;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.czechitas.lekce10.operace.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -19,14 +22,15 @@ public class Kalkulacka implements Runnable {
     }
 
     public Kalkulacka() {
+        Konstanty konstanty = nacistKonstanty();
         mapaOperaci = Map.of(
                 "+", new Scitani(),
                 "-", new Odcitani(),
                 "*", new Nasobeni(),
                 "/", new Deleni(),
                 "odmocnit", new DruhaOdmocnina(),
-                "pi", new CisloPi(Math.PI),
-                "e", new CisloE(Math.E)
+                "pi", new CisloPi(konstanty.getPi()),
+                "e", new CisloE(konstanty.getE())
         );
     }
 
@@ -72,6 +76,30 @@ public class Kalkulacka implements Runnable {
 
     private void vypsatVysledek() {
         System.out.printf("Výpočet: %s", zvolenaOperace.vypocet()).println();
+    }
+
+    private static Konstanty nacistKonstanty() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try (InputStream inputStream = Kalkulacka.class.getResourceAsStream("konstanty.json")) {
+            return objectMapper.readValue(inputStream, Konstanty.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Nepodařilo se načíst konstanty.", e);
+        }
+    }
+
+    private static Konstanty nacistKonstantyStarsi() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        // Alternativní zápis pomocí try-finally
+        try {
+            InputStream inputStream = Kalkulacka.class.getResourceAsStream("konstanty.json");
+            try {
+                return objectMapper.readValue(inputStream, Konstanty.class);
+            } finally {
+                inputStream.close();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Nepodařilo se načíst konstanty.", e);
+        }
     }
 
 }
