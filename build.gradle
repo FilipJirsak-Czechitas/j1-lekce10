@@ -13,11 +13,11 @@ repositories {
 }
 
 dependencies {
-    implementation "com.fasterxml.jackson.core:jackson-databind:2.14.2"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.17.0"
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.2"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.13.1"
 
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.13.1"
 }
 
 test {
@@ -26,8 +26,4 @@ test {
 
 application {
     mainClass = "cz.czechitas.lekce10.Kalkulacka"
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
 }
